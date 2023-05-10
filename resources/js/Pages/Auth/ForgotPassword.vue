@@ -1,15 +1,14 @@
-<script setup>
-import {Head, useForm} from '@inertiajs/vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+<script lang="ts" setup>
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import {Head, useForm} from '@inertiajs/vue3';
 
-defineProps({
-    status: String,
-});
+defineProps<{
+    status?: string;
+}>();
 
 const form = useForm({
     email: '',
@@ -21,34 +20,32 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot Password"/>
+    <GuestLayout>
+        <Head title="Forgot Password"/>
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo/>
-        </template>
-
-        <div class="mb-4 text-sm text-gray-600">
+        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
             Forgot your password? No problem. Just let us know your email address and we will email you a password reset
             link that will allow you to choose a new one.
         </div>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="email" value="Email"/>
+
                 <TextInput
                     id="email"
                     v-model="form.email"
-                    autocomplete="username"
-                    autofocus
                     class="mt-1 block w-full"
+                    autocomplete="username"
                     required
+                    autofocus
                     type="email"
                 />
+
                 <InputError :message="form.errors.email" class="mt-2"/>
             </div>
 
@@ -58,5 +55,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </AuthenticationCard>
+    </GuestLayout>
 </template>
