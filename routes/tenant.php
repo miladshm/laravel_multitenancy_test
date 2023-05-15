@@ -46,6 +46,8 @@ Route::middleware([
     });
 
     require __DIR__ . '/auth.php';
+
+    Route::apiResource('photo', \App\Http\Controllers\PhotoController::class);
 });
 
 
